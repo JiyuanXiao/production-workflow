@@ -11,8 +11,8 @@ script:
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
-  app: "frontend"
-  env: "Frontend-env"
+  app: "productionWorkflow"
+  env: "ProductionWorkflow-env"
   bucket_name: "elasticbeanstalk-us-east-1-608600996002"
   bucket_path: "frontend"
   on:
