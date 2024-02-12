@@ -6,7 +6,7 @@
 node -v
 ```
 
-a version number should be printed out on following your command. Otherwise, please [install Node.js](https://nodejs.org/en/download) on your computer beforehand.
+- a version number should be printed out on following your command. Otherwise, please [install Node.js](https://nodejs.org/en/download) on your computer beforehand.
 
 2. Create a React project:
 
@@ -14,7 +14,7 @@ a version number should be printed out on following your command. Otherwise, ple
 npx create-react-app my-project
 ```
 
-after the creation is finished, open your project:
+- after the creation is finished, open your project:
 
 ```bash
 cd ./my-project
@@ -26,13 +26,13 @@ cd ./my-project
 npm run start
 ```
 
-by running the command above, a development version of your website should pop up automatically
+- by running the command above, a development version of your website should pop up automatically
 
 ```bash
 npm run test
 ```
 
-by running the command above, a default test suite should be run and the test result should be printed out on your terminal.
+- by running the command above, a default test suite should be run and the test result should be printed out on your terminal.
 
 **Now we can automate the the start-up and test by using Docker**
 
@@ -67,7 +67,7 @@ docker build -f Dockerfile.dev -t my-project .
 docker run -p 8080:3000 my-project
 ```
 
-and open the websie http://localhost:8080, you should be able to see your webside on your browser.
+- and open the websie http://localhost:8080, you should be able to see your webside on your browser.
 
 # Create a Docker Image for Production Workflow
 
@@ -93,7 +93,7 @@ docker build -t my-production .
 docker run -p 8080:80 my-production
 ```
 
-and open the websie http://localhost:8080, you should be able to see your webside on your browser.
+- and open the websie http://localhost:8080, you should be able to see your webside on your browser.
 
 **The purpose of this image is to make the production build on the AWS clould server at the later steps**
 
@@ -131,7 +131,7 @@ git commit -m "initial commit"
 git remote add origin $YOUR_GITHUB_REPO_LINK
 ```
 
-where `$YOUR_GITHUB_REPO_LINK` shoule be the link you copy from step#7
+- where `$YOUR_GITHUB_REPO_LINK` shoule be the link you copy from step#7
 
 11. Run:
 
