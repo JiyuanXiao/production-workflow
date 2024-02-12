@@ -1,70 +1,171 @@
-# Getting Started with Create React App
+# AWS Elastic Beanstalk Configuration
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Create EC2 IAM Instance Profile
 
-## Available Scripts
+1. Go to AWS Management Console
 
-In the project directory, you can run:
+2. Search for `IAM` and click the IAM Service.
 
-### `npm start`
+3. Click `Roles` under `Access Management` in the left sidebar.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+4. Click the `Create role` button.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+5. Select `AWS Service` under `Trusted entity type`. Then select `EC2` under `common use cases`.
 
-### `npm test`
+6. Search for `AWSElasticBeanstalk` and select the `AWSElasticBeanstalkWebTier`, `AWSElasticBeanstalkWorkerTier` and `AWSElasticBeanstalkMulticontainerDocker` policies. Click the `Next` button.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+7. Give the role the name of `aws-elasticbeanstalk-ec2-role`
 
-### `npm run build`
+8. Click the `Create role` button.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Create Elastic Beanstalk Environment
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Go to AWS Management Console
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Search for `Elastic Beanstalk` and click the Elastic Beanstalk service.
 
-### `npm run eject`
+3. If you've never used Elastic Beanstalk before you will see a splash page. Click the `Create Application` button. If you have created Elastic Beanstalk environments and applications before, you will be taken directly to the Elastic Beanstalk dashboard. In this case, click the `Create environment` button. There is now a flow of 6 steps that you will be taken through.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. You will need to provide an Application name, which will auto-populate an Environment Name.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. Scroll down to find the Platform section. You will need to select the Platform of `Docker`. This will auto-select several default options. Change the Platform branch to `Docker running on 64bit Amazon Linux 2`. The new 2023 branch currently has issues with single-container deployments.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+6. Scroll down to the Presets section and make sure that `free tier eligible` has been selected:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+7. Click the `Next` button to move to Step #2.
 
-## Learn More
+8. You will be taken to a Service Access configuration form.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Select `Create and use new service role` and name it `aws-elasticbeanstalk-service-role`. You will then need to set the `EC2 instance profile` to the `aws-elasticbeanstalk-ec2-role` created earlier (this will likely be auto-populated for you).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+10. Click the `Skip to Review` button as Steps 3-6 are not applicable.
 
-### Code Splitting
+11. Click the `Submit` button and wait for your new Elastic Beanstalk application and environment to be created and launch.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+12. Click the link below the checkmark under Domain. This should open the application in your browser and display a Congratulations message.
 
-### Analyzing the Bundle Size
+## Update Object Ownership of S3 Bucket
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Go to AWS Management Console
 
-### Making a Progressive Web App
+2. Search for `S3` and click the S3 service.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3. Find and click the elasticbeanstalk bucket that was automatically created with your environment.
 
-### Advanced Configuration
+4. Click `Permissions` menu tab
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+5. Find `Object Ownership` and click `Edit`
 
-### Deployment
+6. Change from `ACLs disabled` to `ACLs enabled`. Change `Bucket owner Preferred` to `Object Writer`. Check the box acknowledging the warning.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+7. Click `Save changes`.
 
-### `npm run build` fails to minify
+## Add AWS configuration details to .travis.yml file's deploy script
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Set the region. The region code can be found by clicking the region in the toolbar next to your username.
+
+eg: 'us-east-1'
+
+2. app should be set to the Application Name (Step #4 in the Initial Setup above)
+
+eg: 'docker'
+
+3. env should be set to the lower case of your Beanstalk Environment name with a leading capital letter.
+
+eg: 'Docker-env'
+
+4. Set the bucket_name. This can be found by searching for the S3 Storage service. Click the link for the elasticbeanstalk bucket that matches your region code and copy the name.
+
+eg: 'elasticbeanstalk-us-east-1-923445599289'
+
+5. Set the bucket_path to 'docker'
+
+6. Set access_key_id to `$AWS_ACCESS_KEY`
+
+7. Set secret_access_key to `"$AWS_SECRET_KEY"`. A double-quote is needed here.
+
+8. example travisCI deploy script:
+
+```yml
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "productionWorkflow"
+  env: "ProductionWorkflow-env"
+  bucket_name: "elasticbeanstalk-us-east-1-608600996002"
+  bucket_path: "frontend"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
+```
+
+## Create an IAM User
+
+1. Search for the `IAM Security, Identity & Compliance Service`
+
+2. Click `Create Individual IAM Users` and click `Manage Users`
+
+3. Click `Add User`
+
+4. Enter any name you’d like in the `User Name` field.
+
+eg: docker-react-travis-ci
+
+5. Click `Next`
+
+6. Click `Attach Policies Directly`
+
+7. Search for `beanstalk`
+
+8. Tick the box next to `AdministratorAccess-AWSElasticBeanstalk`
+
+9. Click `Next`
+
+10. Click `Create user`
+
+11. Select the IAM user that was just created from the list of users
+
+12. Click `Security Credentials`
+
+13. Scroll down to find `Access Keys`
+
+14. Click `Create access key`
+
+15. Select `Command Line Interface (CLI)`
+
+16. Scroll down and tick the `I understand...` check box and click `Next`
+
+Copy and/or download the Access Key ID and Secret Access Key to use in the Travis Variable Setup.
+
+Travis Variable Setup
+
+1. Go to your Travis Dashboard and find the project repository for the application we are working on.
+
+2. On the repository page, click `More Options` and then `Settings`
+
+3. Create a variable named `AWS_ACCESS_KEY` and paste your IAM access key from step #13 above.
+
+4. Create a variable named `AWS_SECRET_KEY` and paste your IAM secret key from step #13 above.
+
+Deploying App
+
+1. Make a small change to your src/App.js file in the greeting text.
+
+2. In the project root, in your terminal run:
+
+```bash
+git add.
+git commit -m “testing deployment"
+git push origin main
+```
+
+3. Go to your Travis Dashboard and check the status of your build.
+
+4. The status should eventually return with a green checkmark and show `build passing`
+
+5. Go to your AWS Elastic Beanstalk application
+
+6. It should say `Elastic Beanstalk is updating your environment`
+
+7. It should eventually show a green checkmark under `Health`. You will now be able to access your application at the external URL provided under the environment name.
