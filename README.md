@@ -1,16 +1,16 @@
 # What is this repo for?
 
-This is a demenstration (and a memo note for myself) of a project's continuous integration and deployment setup.
+- This is a demonstration (and a memo note for myself) of how to set up continuous integration and deployment for a project.
 
-In this demenstration, we used TravisCI as the continuous integration service provider, and AWS as the deployment platform.
+- In this demonstration, I used TravisCI as the continuous integration service provider, AWS as the deployment platform, and a React project as the demo project.
 
-If you are fresh on CI and deployment and you want to learn about them, hope this repo could provide valueable info to you.
+- If you are fresh on CI and deployment, and you want to learn about them, hope this repo could provide valueable info to you.
 
 # What are the files above?
 
-The files in this repo is the final outcome of the CI and Deployment process, except the `docker-compse.yml` and `docker-compse-dev.yml`.
+- The files in this repo is the final outcome of the setup process, except the `docker-compse.yml` and `docker-compse-dev.yml`.
 
-`docker-compse.yml` and `docker-compse-dev.yml` are only used for simplfy the process of docker images testing.
+- `docker-compse.yml` and `docker-compse-dev.yml` are only used for simplfy the process of docker images testing. Follow the demonstration below won't produce these two files in your project's directory.
 
 # Get Start
 
