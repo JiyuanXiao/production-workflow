@@ -1,8 +1,8 @@
 # What is this repo for?
 
-- This is a demonstration (and a memo note for myself) of how to set up continuous integration and deployment for a project.
+- This is a demonstration (and a memo note for myself) of how to set up **Continuous Integration** and **Deployment** for a project.
 
-- In this demonstration, I used TravisCI as the continuous integration service provider, AWS as the deployment platform, and a React project as the demo project.
+- In this demonstration, I used **TravisCI** as the continuous integration service provider, **AWS** as the deployment platform, and a React project as the demo project.
 
 - If you are fresh on CI and deployment, and you want to learn about them, hope this repo could provide valueable info to you.
 
