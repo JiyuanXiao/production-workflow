@@ -90,10 +90,10 @@ eg: 'elasticbeanstalk-us-east-1-923445599289'
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
-  app: "productionWorkflow"
-  env: "ProductionWorkflow-env"
-  bucket_name: "elasticbeanstalk-us-east-1-608600996002"
-  bucket_path: "frontend"
+  app: "docker"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-us-east-1-923445599289"
+  bucket_path: "docker"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
