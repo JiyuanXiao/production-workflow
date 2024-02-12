@@ -1,4 +1,20 @@
-# Create a React Project
+# What is this repo for?
+
+This is a demenstration (and a memo note for myself) of a project's continuous integration and deployment setup.
+
+In this demenstration, we used TravisCI as the continuous integration service provider, and AWS as the deployment platform.
+
+If you are fresh on CI and deployment and you want to learn about them, hope this repo could provide valueable info to you.
+
+# What are the files above?
+
+The files in this repo is the final outcome of the CI and Deployment process, except the `docker-compse.yml` and `docker-compse-dev.yml`.
+
+`docker-compse.yml` and `docker-compse-dev.yml` are only used for simplfy the process of docker images testing.
+
+# Get Start
+
+## Create a React Project
 
 1. Make sure your computer has Node.js installed. If Node.js has been installed, run the following command in your terminal
 
@@ -36,7 +52,7 @@ npm run test
 
 **Now we can automate the the start-up and test by using Docker**
 
-# Create a Docker Image for Project Development
+## Create a Docker Image for Project Development
 
 1. Make sure you has Docker Desktop installed in your computer. If not, please download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/) beforehand.
 
@@ -69,7 +85,7 @@ docker run -p 8080:3000 my-project
 
 - and open the websie http://localhost:8080, you should be able to see your webside on your browser.
 
-# Create a Docker Image for Production Workflow
+## Create a Docker Image for Production Workflow
 
 1. Create a Dockerfile named `Dockerfile` and include the following code into the file:
 
@@ -97,7 +113,7 @@ docker run -p 8080:80 my-production
 
 **The purpose of this image is to make the production build on the AWS clould server at the later steps**
 
-# Github Setup
+## Github Setup
 
 1. Make sure you have a Github account, and you have access permission on your local computer. If not, please [create a Github Account](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github) and [connect your local computer to your github account with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
@@ -141,7 +157,7 @@ git  push origin master
 
 12. Go back to your Github repo webpage and refresh your page, all of your project files should be shown on your repo page.
 
-# Travis CI Setup
+## Travis CI Setup
 
 1. Go to [Travis-ci.com](https://www.travis-ci.com/) and Sign up with GitHub.
 
@@ -170,9 +186,9 @@ By following instructions above, Travis CI will:
 - Build a custom Docker image using `Dokcerfile.dev`
 - Run the Docker container and run our test suite on the container
 
-# AWS Elastic Beanstalk Configuration
+## AWS Elastic Beanstalk Configuration
 
-## Create EC2 IAM Instance Profile
+### Create EC2 IAM Instance Profile
 
 1. Go to AWS Management Console
 
@@ -190,7 +206,7 @@ By following instructions above, Travis CI will:
 
 8. Click the `Create role` button.
 
-## Create Elastic Beanstalk Environment
+### Create Elastic Beanstalk Environment
 
 1. Go to AWS Management Console
 
@@ -216,7 +232,7 @@ Select `Create and use new service role` and name it `aws-elasticbeanstalk-servi
 
 12. Click the link below the checkmark under Domain. This should open the application in your browser and display a Congratulations message.
 
-## Update Object Ownership of S3 Bucket
+### Update Object Ownership of S3 Bucket
 
 1. Go to AWS Management Console
 
@@ -232,7 +248,7 @@ Select `Create and use new service role` and name it `aws-elasticbeanstalk-servi
 
 7. Click `Save changes`.
 
-## Add AWS configuration details to .travis.yml file's deploy script
+### Add AWS configuration details to .travis.yml file's deploy script
 
 1. Set the region. The region code can be found by clicking the region in the toolbar next to your username.
 
@@ -272,7 +288,7 @@ deploy:
   secret_access_key: "$AWS_SECRET_KEY"
 ```
 
-## Create an IAM User
+### Create an IAM User
 
 1. Search for the `IAM Security, Identity & Compliance Service`
 
@@ -310,7 +326,7 @@ eg: docker-react-travis-ci
 
 Copy and/or download the Access Key ID and Secret Access Key to use in the Travis Variable Setup.
 
-Travis Variable Setup
+### Travis Variable Setup
 
 1. Go to your Travis Dashboard and find the project repository for the application we are working on.
 
@@ -320,7 +336,7 @@ Travis Variable Setup
 
 4. Create a variable named `AWS_SECRET_KEY` and paste your IAM secret key from step #13 above.
 
-Deploying App
+### Deploying App
 
 1. Make a small change to your src/App.js file in the greeting text.
 
