@@ -119,19 +119,17 @@ docker run -p 8080:80 my-production
 
 2. Make sure you have Git installed in your local computer. If not, please [install Git](https://git-scm.com/downloads).
 
-3. Open your Github account and click the `+` button on the right upper corner of the webpage, and then in the dropdown click `New repository`.
+3. Open your Github account and click the `+` button on the upper right corner of the webpage. In the dropdown click `New repository`.
 
-4. Enter your project name under the `Repository name` blank.
+4. Enter your project name in the blank under `Repository name`.
 
 5. Choose `Public`
 
-6. Click `Create Repository
+6. Click `Create Repository`
 
-7. Inside the `Quick setup` box, click `SSH` button and copy the Github repo link following the `SSH` button. It should look like
+7. Inside the `Quick setup` box, click `SSH` button and copy the Github repo link following the `SSH` button. It should look like `git@github.com:YourGithubName/RepoName.git`
 
-`git@github.com:YourGithubName/RepoName.git`
-
-8. Go back to your ternimal and make sure you are in the root directory of your project,
+8. Go back to your terminal and make sure you are in the root directory of your project,
 
 9. Run:
 
